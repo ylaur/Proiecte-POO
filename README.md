@@ -1,6 +1,6 @@
 # 🛒 Sistem Gestiune Rețea de Magazine (Proiect POO)
 
-Acest proiect a fost dezvoltat în C++ pentru cursul de **Programare Orientată pe Obiecte (POO)**. Aplicația simulează o rețea complexă de magazine, gestionând stocuri de produse, locații pe o hartă 2D și calculând distanțe și rute optime folosind algoritmi pe grafuri.
+Acest proiect a fost dezvoltat în C++ pentru cursul/laboratorul de **Programare Orientată pe Obiecte (POO)**. Aplicația simulează o rețea complexă de magazine, gestionând stocuri de produse, locații pe o hartă 2D și calculând distanțe și rute optime folosind algoritmi pe grafuri.
 
 ## 🚀 Funcționalități principale
 
