@@ -80,19 +80,19 @@ int main() {
     // Apelare Metode Distributie (Algoritmul original)
     std::cout << "========= 1. ALGORITMI DE DISTRIBUTIE =========\n";
 
-    unsigned int* res3 = reteauaMea.distributie(1, 3);
+    res3 = reteauaMea.distributie(1, 3);
     if (res3 != NULL) {
         std::cout << "Cel mai indepartat: " << reteauaMea.getMagazine()[res3[0]].getNume() << "\n";
         delete[] res3;
     }
 
-    unsigned int* res4 = reteauaMea.distributie(1, 4);
+    res4 = reteauaMea.distributie(1, 4);
     if (res4 != NULL) {
         std::cout << "Cel mai apropiat: " << reteauaMea.getMagazine()[res4[0]].getNume() << "\n";
         delete[] res4;
     }
 
-    unsigned int* res2 = reteauaMea.distributie(1, 2, 150);
+    res2 = reteauaMea.distributie(1, 2, 150);
     if (res2 != NULL) {
         std::cout << "Magazine in raza de 150:\n";
         for (unsigned int i = 1; i <= res2[0]; ++i) {
@@ -101,7 +101,7 @@ int main() {
         delete[] res2;
     }
 
-    unsigned int* res1 = reteauaMea.distributie(1, 1, 3);
+    res1 = reteauaMea.distributie(1, 1, 3);
     if (res1 != NULL) {
         std::cout << "Traseu catre Brico Universal:\n";
         for (unsigned int i = 1; i <= res1[0]; ++i) {
