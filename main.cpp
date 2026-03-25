@@ -5,6 +5,12 @@
 #include "ReteaMagazine.h"
 
 int main() {
+
+    // Tema proiect: Comert
+    // Proiectul incearca sa mimeze realitatea: avem magazine disponibile pe o harta
+    // si dorim sa aflam informatii despre ele (Locatie, Produsele disponibile,
+    // detalii despre oricare Magazin individual, Relatii dintre Magazine)
+
 	Produs alimente[] = { // Cateva exemple care folosesc Clasele si Metodele aferente lor
         Produs("Paine Prahova", 2.5),
         Produs("Lapte 1L", 5.0),
@@ -44,51 +50,23 @@ int main() {
     Magazin arrayMagazine[] = {m1, m2, m3, m4, m5};
     ReteaMagazine reteauaMea(5, arrayMagazine);
 
-	// Apelare Metode
-    unsigned int* res3 = reteauaMea.distributie(1, 3);
-    if (res3 != NULL) {
-        std::cout << "Cel mai indepartat: " << reteauaMea.getMagazine()[res3[0]].getNume() << "\n\n";
-        delete[] res3;
-    }
+    unsigned int* res1;
+    unsigned int* res2;
+    unsigned int* res3;
+    unsigned int* res4;
 
-    unsigned int* res4 = reteauaMea.distributie(1, 4);
-    if (res4 != NULL) {
-        std::cout << "Cel mai apropiat: " << reteauaMea.getMagazine()[res4[0]].getNume() << "\n\n";
-        delete[] res4;
-    }
-
-    unsigned int* res2 = reteauaMea.distributie(1, 2, 150);
-    if (res2 != NULL) {
-        std::cout << "Magazine in raza de 150:\n";
-        for (unsigned int i = 1; i <= res2[0]; ++i) {
-            std::cout << "- " << reteauaMea.getMagazine()[res2[i]].getNume() << "\n";
-        }
-        std::cout << "\n";
-        delete[] res2;
-    }
-
-    unsigned int* res1 = reteauaMea.distributie(1, 1, 3);
-    if (res1 != NULL) {
-        std::cout << "Traseu catre Brico Universal:\n";
-        for (unsigned int i = 1; i <= res1[0]; ++i) {
-            std::cout << reteauaMea.getMagazine()[res1[i]].getNume() << (i < res1[0] ? " -> " : "");
-        }
-        std::cout << "\n";
-        delete[] res1;
-    }
-
-    // Apelare Metode Distributie (Algoritmul original)
-    std::cout << "========= 1. ALGORITMI DE DISTRIBUTIE =========\n";
-
+    // Apelare Metode
+    // Apelare Metode Distributie
     res3 = reteauaMea.distributie(1, 3);
+    std::cout << "========= 1. ALGORITMI DE DISTRIBUTIE =========\n";
     if (res3 != NULL) {
-        std::cout << "Cel mai indepartat: " << reteauaMea.getMagazine()[res3[0]].getNume() << "\n";
+        std::cout << "Cel mai indepartat: " << reteauaMea.getMagazine()[*res3].getNume() << "\n";
         delete[] res3;
     }
 
     res4 = reteauaMea.distributie(1, 4);
     if (res4 != NULL) {
-        std::cout << "Cel mai apropiat: " << reteauaMea.getMagazine()[res4[0]].getNume() << "\n";
+        std::cout << "Cel mai apropiat: " << reteauaMea.getMagazine()[*res4].getNume() << "\n";
         delete[] res4;
     }
 
@@ -105,7 +83,7 @@ int main() {
     if (res1 != NULL) {
         std::cout << "Traseu catre Brico Universal:\n";
         for (unsigned int i = 1; i <= res1[0]; ++i) {
-            std::cout << reteauaMea.getMagazine()[res1[i]].getNume() << (i < res1[0] ? " -> " : "");
+            std::cout << reteauaMea.getMagazine()[res1[i]].getNume() << (i < *res1 ? " -> " : "");
         }
         std::cout << "\n\n";
         delete[] res1;
@@ -118,9 +96,8 @@ int main() {
     std::cout << "\n[ Testare distanta Punct2D ]\n";
     Punct2D loc1 = m1.getLocatie();
     Punct2D loc2 = m3.getLocatie();
-    std::cout << "Distanta intre " << m1.getNume() << " " << loc1
-              << " si " << m3.getNume() << " " << loc2
-              << " este: " << loc1.distanta(loc2) << "\n";
+    std::cout << "Distanta intre " << m1.getNume() << " " << loc1 << " si " << m3.getNume() << " " << loc2
+    << " este: " << loc1.distanta(loc2) << "\n";
 
     // Manipulare Stoc (Testare insereaza/sterge Produs)
     std::cout << "\n[ Manipulare Stoc Magazin ]\n";
@@ -129,7 +106,7 @@ int main() {
     m5.insereazaProdus(1, pNou); // Il inseram pe pozitia 1
 
     std::cout << "Stergem primul produs (pozitia 0)...\n";
-    m5.stergeProdus(0); // Ar trebui sa stearga "Mere Ionatan"
+    m5.stergeProdus(0); // Sterge produsul "Mere Ionatan"
 
     std::cout << "Noul inventar pentru magazinul 5:\n";
     std::cout << m5 << "\n"; // Aici testam operatorul << supraincarcat
@@ -150,7 +127,7 @@ int main() {
         std::cout << i + 1 << ". " << reteauaMea.getMagazine()[i].getNume() << "\n";
     }
 
-    // Test Deep Copy 
+    // Test Deep Copy
     std::cout << "\n[ Verificare Deep Copy (Regula celor 3) ]\n";
     Magazin clonaBrico = m4; // Apelam constructorul de copiere
     clonaBrico.setNume("Brico FALS");
