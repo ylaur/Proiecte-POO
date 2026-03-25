@@ -158,7 +158,6 @@ int main() {
 
     std::cout << "Pret ciment in original (" << m4.getNume() << "): " << m4.getProduse()[0].getPret() << " RON\n";
     std::cout << "Pret ciment in clona (" << clonaBrico.getNume() << "): " << clonaBrico.getProduse()[0].getPret() << " RON\n";
-    std::cout << "(Daca preturile sunt diferite, copierea a fost facuta corect pe portiuni de memorie distincte!)\n\n";
 
     return 0;
 }
