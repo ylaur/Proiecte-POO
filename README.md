@@ -20,18 +20,3 @@ Proiectul este modularizat în următoarele fișiere:
 * `Magazin.h` - Gestionează datele unui magazin (Nume, Slogan, Forma Juridică) și array-ul dinamic de produse (stocul).
 * `ReteaMagazine.h` - Clasa "Core". Generează harta (matricea de adiacență), stochează vectorul de magazine și rulează algoritmii de calcul al drumurilor.
 * `main.cpp` - Punctul de intrare în program, unde sunt populate datele de test și sunt apelați algoritmii.
-
-## Tehnologii folosite
-* **Limbaj:** C++ standard (C++11 sau mai nou)
-* **Biblioteci standard:** `<iostream>`, `<iomanip>`, `<cstring>`, `<thread>`, `<chrono>`, `<cmath>`, `<cstdlib>`, `<ctime>`
-
-## Cum se compilează și rulează
-
-Dacă folosești **Linux** sau un terminal cu g++ instalat (ex: WSL, MinGW pe Windows), rulează următoarele comenzi în folderul proiectului:
-
-```bash
-# Compilarea proiectului
-g++ main.cpp -o gestiune_magazine
-
-# Rularea executabilului
-./gestiune_magazine
