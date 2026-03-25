@@ -10,7 +10,6 @@ Acest proiect a fost dezvoltat în C++ pentru cursul/laboratorul de **Programare
   * Traseul optim (cel mai scurt drum) către un anumit magazin.
   * Toate magazinele aflate într-o anumită rază de acțiune.
   * Cel mai apropiat și cel mai îndepărtat magazin din rețea.
-* **Interfață de Consolă:** Suprapunerea operatorului `<<` pentru afișarea formatată a produselor, stocurilor și datelor magazinelor, inclusiv o animație de încărcare (folosind `<thread>` și `<chrono>`).
 
 ## Structura Proiectului
 
