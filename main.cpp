@@ -118,7 +118,7 @@ int main() {
     std::cout << "\n[ Testare distanta Punct2D ]\n";
     Punct2D loc1 = m1.getLocatie();
     Punct2D loc2 = m3.getLocatie();
-    std::cout << "Distanta in linie dreapta intre " << m1.getNume() << " " << loc1
+    std::cout << "Distanta intre " << m1.getNume() << " " << loc1
               << " si " << m3.getNume() << " " << loc2
               << " este: " << loc1.distanta(loc2) << "\n";
 
