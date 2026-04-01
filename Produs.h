@@ -41,7 +41,7 @@ public:
         return *this;
     }
 
-    char* getNume() const { return Nume; } // GETTERI
+    const char* getNume() const { return Nume; } // GETTERI
     double getPret() const { return Pret; }
 
     void setNume(const char *nume) { // SETTERI
