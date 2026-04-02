@@ -1,25 +1,25 @@
 #pragma once
 #include <iostream>
 #include <cstring>
-#include "Produs.h"
+#include "Produs.h"  // Ne folosim de clasele definite anterior (ierarhic)
 #include "Punct2D.h"
 #include "Angajat.h"
 
-class Magazin {
-    char *Nume;
+class Magazin { // Clasa Magazin
+    char *Nume;                  // 9 Date Membre
     char *Slogan;
-    char *FormaJuridica;
-    unsigned int NumarProduse;
-    unsigned int NumarAngajati;
-    Produs *Produse;
-    Angajat Sef;
-    Angajat *Angajati;
-    Punct2D Locatie;
+    char *FormaJuridica;         // Poate fi DOAR una din urmatoarele: "SRL", "SA", "PFA"
+    unsigned int NumarProduse;   // Contor pentru Produse (stocheaza numarul de Produse)
+    unsigned int NumarAngajati;  // Contor pentru Angajati (stocheaza numarul de Angajati)
+    Produs *Produse;             // Array alocat dinamic in care vom stoca Produsele
+    Angajat Sef;                 
+    Angajat *Angajati;           // Array alocat dinamic in care vom stoca Angajatii
+    Punct2D Locatie;             // Stocheaza Locatia (i.e: (5, 25))
 
 public:
-    Magazin() : Nume(NULL), Slogan(NULL), FormaJuridica(NULL), NumarProduse(0), Produse(NULL),
-                NumarAngajati(0), Sef(Angajat()), Angajati(NULL),Locatie({0, 0})  {};
-    Magazin(const char *_nume, const char *_slogan, const char *_formaJuridica,
+    Magazin() : Nume(NULL), Slogan(NULL), FormaJuridica(NULL), NumarProduse(0), Produse(NULL), // Constructor fara Parametrii
+                NumarAngajati(0), Sef(Angajat()), Angajati(NULL),Locatie({0, 0})  {}; 
+    Magazin(const char *_nume, const char *_slogan, const char *_formaJuridica, // Constructor cu Parametrii
             const unsigned int _numarProduse, const Produs _produse[], const Punct2D &_locatie,
             const unsigned int _nrAngajati, const Angajat &_sef, const Angajat _angajati[])
             : NumarProduse(_numarProduse), NumarAngajati(_nrAngajati), Locatie(_locatie), Sef(_sef) {
@@ -39,7 +39,7 @@ public:
             Slogan = NULL;
         }
 
-        if (_formaJuridica != NULL && (std::strcmp(_formaJuridica, "PFA") == 0 || std::strcmp(_formaJuridica, "SRL") == 0 ||
+        if (_formaJuridica != NULL && (std::strcmp(_formaJuridica, "PFA") == 0 || std::strcmp(_formaJuridica, "SRL") == 0 || // Doar UNA din optiuni
             std::strcmp(_formaJuridica, "SA") == 0)) {
             FormaJuridica = new char[std::strlen(_formaJuridica) + 1];
             std::strcpy(FormaJuridica, _formaJuridica);
@@ -49,7 +49,7 @@ public:
         }
 
         if (NumarProduse > 0) {
-            Produse = new Produs[NumarProduse];
+            Produse = new Produs[NumarProduse]; // Alocam memorie dinamic
             for (unsigned int i = 0; i < _numarProduse; i++) {
                 Produse[i] = _produse[i];
             }
@@ -70,7 +70,7 @@ public:
             Angajati = NULL;
         }
     }
-    Magazin(const Magazin &m) : NumarProduse(m.NumarProduse), NumarAngajati(m.NumarAngajati), Locatie(m.Locatie), Sef(m.Sef) {
+    Magazin(const Magazin &m) : NumarProduse(m.NumarProduse), NumarAngajati(m.NumarAngajati), Locatie(m.Locatie), Sef(m.Sef) { // Constructor de Copiere
         if (m.Nume != NULL) {
             Nume = new char[std::strlen(m.Nume) + 1];
             std::strcpy(Nume, m.Nume);
@@ -118,7 +118,7 @@ public:
         }
     }
 
-    Magazin& operator=(const Magazin &m) {
+    Magazin& operator=(const Magazin &m) { // Operator Overloading pentru asignare (=)
         if (&m == this) {
             return *this;
         }
@@ -183,19 +183,21 @@ public:
         return *this;
     }
 
-    const char* getNume() const { return Nume; }
-    const char* getSlogan() const { return Slogan; }
-    const char* getFormatJuridica() const { return FormaJuridica; }
-    unsigned int getNumarProduse() const { return NumarProduse; }
-    unsigned int getNumarAngajati() const { return NumarAngajati; }
-    const Produs* getProduse() const { return Produse; }
-    const Angajat* getAngajati() const { return Angajati; }
-    Produs getProdusX(unsigned int X) const { return (X >= NumarProduse ? Produs() : Produse[X]); }
-    Angajat getAngajatX(unsigned int X) const { return (X >= NumarAngajati ? Angajat() : Angajati[X]); }
-    Angajat getSef() const { return Sef; }
-    Punct2D getLocatie() const { return Locatie; }
+    // GETTERI
+    const char* getNume() const { return Nume; }                    // Getter pentru Nume
+    const char* getSlogan() const { return Slogan; }                // Getter pentru Slogan
+    const char* getFormatJuridica() const { return FormaJuridica; } // Getter Forma Juridica
+    unsigned int getNumarProduse() const { return NumarProduse; }   // Getter NumarProduse
+    unsigned int getNumarAngajati() const { return NumarAngajati; } // Getter NumarAngajati
+    const Produs* getProduse() const { return Produse; }            // Getter Produse
+    const Angajat* getAngajati() const { return Angajati; }         // Getter Angajati
+    Produs getProdusX(unsigned int X) const { return (X >= NumarProduse ? Produs() : Produse[X]); }      // Geter Produs de la pozitia X
+    Angajat getAngajatX(unsigned int X) const { return (X >= NumarAngajati ? Angajat() : Angajati[X]); } // Getter Angajat de la pozitia X
+    Angajat getSef() const { return Sef; }                          // Getter Sef
+    Punct2D getLocatie() const { return Locatie; }                  // Getter Locatie 
 
-    void setNume(const char *_nume) {
+    // SETTERi
+    void setNume(const char *_nume) { // Setter Nume
         delete [] Nume;
         if (_nume != NULL) {
             Nume = new char[std::strlen(_nume) + 1];
@@ -205,7 +207,7 @@ public:
             Nume = NULL;
         }
     }
-    void setSlogan(const char *_slogan) {
+    void setSlogan(const char *_slogan) { // Setter Slogan
         delete [] Slogan;
         if (_slogan != NULL) {
             Slogan = new char[std::strlen(_slogan) + 1];
@@ -215,9 +217,9 @@ public:
             Slogan = NULL;
         }
     }
-    void setFormaJuridica(const char *_FormaJuridica) {
+    void setFormaJuridica(const char *_FormaJuridica) { // Setter FormaJuridica
         delete [] FormaJuridica;
-        if (_FormaJuridica != NULL && (std::strcmp(_FormaJuridica, "PFA") == 0 || std::strcmp(_FormaJuridica, "SRL") == 0 ||
+        if (_FormaJuridica != NULL && (std::strcmp(_FormaJuridica, "PFA") == 0 || std::strcmp(_FormaJuridica, "SRL") == 0 || // Doar UNA din optiuni
             std::strcmp(_FormaJuridica, "SA") == 0)) {
             FormaJuridica = new char[std::strlen(_FormaJuridica) + 1];
             std::strcpy(FormaJuridica, _FormaJuridica);
@@ -226,7 +228,7 @@ public:
             FormaJuridica = NULL;
         }
     }
-    void setProduse(const unsigned int _numarProduse, const Produs _produse[]) {
+    void setProduse(const unsigned int _numarProduse, const Produs _produse[]) { // Setter NumarProduse si Produse
         delete[] Produse;
         if (_numarProduse == 0) {
             NumarProduse = 0;
@@ -240,13 +242,13 @@ public:
             }
         }
     }
-    void setProdusX(const Produs &produs, unsigned int X) {
+    void setProdusX(const Produs &produs, unsigned int X) { // Setter Produs de la pozitia X
         if (X >= NumarProduse) {
             return;
         }
         Produse[X] = produs;
     }
-    void setAngajati(const unsigned int _numarAngajati, const Angajat _angajati[]) {
+    void setAngajati(const unsigned int _numarAngajati, const Angajat _angajati[]) { // Setter NumarAngajati si Angajati
         delete[] Angajati;
         if (_numarAngajati == 0) {
             NumarAngajati = 0;
@@ -260,109 +262,109 @@ public:
             }
         }
     }
-    void setAngajatX(const Angajat &angajat, unsigned int X) {
+    void setAngajatX(const Angajat &angajat, unsigned int X) { // Setter Angajat de la pozitia X
         if (X >= NumarAngajati) {
             return;
         }
         Angajati[X] = angajat;
     }
-    void setSef(const Angajat &sef) { Sef = sef; }
-    void setLocatie(const Punct2D _locatie) { Locatie = _locatie; }
+    void setSef(const Angajat &sef) { Sef = sef; }                  // Setter Sef
+    void setLocatie(const Punct2D _locatie) { Locatie = _locatie; } // Setter Locatie
 
-    void stergeProdus(unsigned int pozitie) {
-        if (NumarProduse == 0) return;
+    void stergeProdus(unsigned int pozitie) { // Metoda pentru Stergerea unui Produs de la o Pozitie anume
+        if (NumarProduse == 0) return; // NumarProduse = 0 => Nu efectuam nimic
 
-        if (NumarProduse == 1) {
+        if (NumarProduse == 1) {       // NumarProduse = 1 => Dezalocam Produse
             delete[] Produse;
             Produse = NULL;
             NumarProduse = 0;
             return;
         }
 
-        if (pozitie >= NumarProduse) {
+        if (pozitie >= NumarProduse) { // Daca pozitia >> NumarProduse, se sterge Ultimul Produs
             pozitie = NumarProduse - 1;
         }
 
-        Produs *auxProduse = new Produs[NumarProduse - 1];
+        Produs *auxProduse = new Produs[NumarProduse - 1]; // Alocam memorie pentru Array-ul nou
         for (unsigned int i = 0; i < pozitie; ++i) {
-            auxProduse[i] = Produse[i];
+            auxProduse[i] = Produse[i];                    // Copiem datele in Array-ul nou
         }
         for (unsigned int i = pozitie + 1; i < NumarProduse; ++i) {
             auxProduse[i - 1] = Produse[i];
         }
 
-        --NumarProduse;
-        delete [] Produse;
-        Produse = auxProduse;
+        --NumarProduse;       // Decrementam NumarProduse cu 1
+        delete[] Produse;     // Dezalocam Produse
+        Produse = auxProduse; // Produse devine auxProduse
     }
-    void stergeAngajat(unsigned int pozitie) {
-        if (NumarAngajati == 0) return;
+    void stergeAngajat(unsigned int pozitie) { // Metoda pentru Stergerea unui Angajat
+        if (NumarAngajati == 0) return; // Nu efectuam nimic
 
-        if (NumarAngajati == 1) {
+        if (NumarAngajati == 1) {       // NumarAngajati = 1 => Dezalocam Angajati
             delete[] Angajati;
             Angajati = NULL;
             NumarAngajati = 0;
             return;
         }
 
-        if (pozitie >= NumarAngajati) {
+        if (pozitie >= NumarAngajati) { // Daca pozitie >> NumarAngajati, se elimina Ultimul Angajat
             pozitie = NumarAngajati - 1;
         }
 
-        Angajat *auxAngajati = new Angajat[NumarAngajati - 1];
+        Angajat *auxAngajati = new Angajat[NumarAngajati - 1]; // Alocam memorie pentru Array-ul nou
         for (unsigned int i = 0; i < pozitie; ++i) {
-            auxAngajati[i] = Angajati[i];
+            auxAngajati[i] = Angajati[i];                      // Copiem datele
         }
         for (unsigned int i = pozitie + 1; i < NumarAngajati; ++i) {
             auxAngajati[i - 1] = Angajati[i];
         }
 
-        --NumarAngajati;
-        delete [] Angajati;
-        Angajati = auxAngajati;
+        --NumarAngajati;        // Decrementam NumarAngajati cu 1
+        delete[] Angajati;      // Dezalocam Angajati
+        Angajati = auxAngajati; // Angajati devine auxAngajati
     }
 
 
-    void insereazaProdus(unsigned int pozitie, const Produs &p) {
-        if (pozitie > NumarProduse) {
+    void insereazaProdus(unsigned int pozitie, const Produs &p) { // Metoda de Inserare a unui Produs la Pozitia specificata
+        if (pozitie > NumarProduse) { // Daca pozitie >> NumarProduse, inserarea se va face la capatul Array-ului
             pozitie = NumarProduse;
         }
 
-        Produs *auxProduse = new Produs[NumarProduse + 1];
+        Produs *auxProduse = new Produs[NumarProduse + 1]; // Alocam memorie pentru noul Array
         for (unsigned int i = 0; i < pozitie; ++i) {
-            auxProduse[i] = Produse[i];
+            auxProduse[i] = Produse[i];                    // Copiem datele
         }
-        auxProduse[pozitie] = p;
+        auxProduse[pozitie] = p;                           // Facem inserarea propiu-zisa
         for (unsigned int i = pozitie; i < NumarProduse; ++i) {
             auxProduse[i + 1] = Produse[i];
+        
         }
-        ++NumarProduse;
-
-        delete[] Produse;
-        Produse = auxProduse;
+        ++NumarProduse;       // Incrementam NumarProduse cu 1
+        delete[] Produse;     // Dezalocam Produse
+        Produse = auxProduse; // Produse devine auxProduse
     }
-    void insereazaAngajat(unsigned int pozitie, const Angajat &a) {
-        if (pozitie > NumarAngajati) {
+    void insereazaAngajat(unsigned int pozitie, const Angajat &a) { // Metoda de Inserare a unui Angajat la Pozitia specificata
+        if (pozitie > NumarAngajati) { // Daca pozitie >> NumarAngajati, inserarea se va face la capatul Array-ului
             pozitie = NumarAngajati;
         }
 
-        Angajat *auxAngajati = new Angajat[NumarAngajati + 1];
+        Angajat *auxAngajati = new Angajat[NumarAngajati + 1]; // Alocam memorie pentru noul Array
         for (unsigned int i = 0; i < pozitie; ++i) {
-            auxAngajati[i] = Angajati[i];
+            auxAngajati[i] = Angajati[i];                      // Copiem datele
         }
-        auxAngajati[pozitie] = a;
+        auxAngajati[pozitie] = a;                              // Facem inserarea propiu-zisa
         for (unsigned int i = pozitie; i < NumarAngajati; ++i) {
             auxAngajati[i + 1] = Angajati[i];
         }
-        ++NumarAngajati;
-
-        delete[] Angajati;
-        Angajati = auxAngajati;
+        
+        ++NumarAngajati;        // Incrementam NumarProduse cu 1
+        delete[] Angajati;      // Dezalocam Angajati
+        Angajati = auxAngajati; // Angajati devine auxAngajati
     }
 
-    friend std::ostream& operator<<(std::ostream &out, const Magazin &m) {
-        out << "===== " << (m.Nume == NULL || m.Nume[0] == '\0' ? "NULL" : m.Nume) << " =====" << std::endl;
-        out << "# Slogan: " << (m.Slogan == NULL || m.Slogan[0] == '\0' ? "NULL" : m.Slogan) << std::endl;
+    friend std::ostream& operator<<(std::ostream &out, const Magazin &m) { // Operator Overloading pentru afisare (<<)
+        out << "===== " << (m.Nume == NULL || m.Nume[0] == '\0' ? "NULL" : m.Nume) << " =====" << std::endl; // Daca, pentru o data membra, valoarea ei este NULL,
+        out << "# Slogan: " << (m.Slogan == NULL || m.Slogan[0] == '\0' ? "NULL" : m.Slogan) << std::endl;   // se afiseaza deasemenea NULL
 
         if (m.NumarProduse == 0) {
             out << "Magazinul NU contine produse!" << std::endl;
@@ -379,7 +381,7 @@ public:
         return out;
     }
 
-    ~Magazin() {
+    ~Magazin() { // Destructor (dezalocam memoria alocata dinamic)
         delete[] Nume;
         delete[] Slogan;
         delete[] FormaJuridica;
