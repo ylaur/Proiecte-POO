@@ -2,15 +2,15 @@
 #include <iostream>
 #include <cstring>
 
-class Angajat {
-    char *Nume;
+class Angajat { // Clasa Anagajat
+    char *Nume;             //  4 Date Membre
     char *Prenume;
     unsigned long long CNP;
     char *NumarTelefon;
     char *Functie;
 
-bool validNrTel(const char *numarTelefon) {
-    if (numarTelefon == NULL || std::strlen(numarTelefon) != 10) {
+static bool validNrTel(const char *numarTelefon) {                 // Metoda Privata
+    if (numarTelefon == NULL || std::strlen(numarTelefon) != 10) { // Rol: valideaza un Numar de Telefon
         return 0;
     }
 
@@ -27,11 +27,11 @@ bool validNrTel(const char *numarTelefon) {
     return 1;
 }
 
-bool validCNP(unsigned long long cnp) {
-    // Format CNP: SAALLZZJJNNNC - 13 cifre
+static bool validCNP(unsigned long long cnp) { // Metoda Privata
+    // Format CNP: SAALLZZJJNNNC - 13 cifre    // Rol: Valideaza un CNP, mai multe detalii la: https://ro.wikipedia.org/wiki/Cod_numeric_personal_(Rom%C3%A2nia)
     unsigned long long copieCNP = cnp / 10;
 
-    if (cnp < 1000000000000ULL || cnp >= 10000000000000ULL) {
+    if (cnp < 1000000000000ULL || cnp >= 10000000000000ULL) { // Contine DOAR 13 Cifre
         return 0;
     }
 
@@ -41,31 +41,31 @@ bool validCNP(unsigned long long cnp) {
     if (cnp % 1000 == 0) return 0;
     cnp /= 1000; // Taiem NNN (NNN apartine intervalului [1, 999])
 
-    unsigned short int JJ = cnp % 100;
+    unsigned short int JJ = cnp % 100; // Salvam JJ = Cod Judet
     if (JJ != 51 && JJ != 52 && JJ != 70 && (JJ < 1 || JJ > 48)) {
         return 0;
     }
     cnp /= 100;
 
-    if (cnp % 100 < 1 || cnp % 100 > 31) return 0;
+    if (cnp % 100 < 1 || cnp % 100 > 31) return 0; // Validam Luna
     cnp /= 100;
 
-    unsigned short int LL = cnp % 100;
+    unsigned short int LL = cnp % 100; // Salvam LL = Luna
     if (LL < 1 || LL > 12) return 0;
     cnp /= 100;
 
-    unsigned short int AA = cnp % 100;
+    unsigned short int AA = cnp % 100; // Salvam AA = An
     cnp /= 100;
 
-    unsigned short int S = cnp % 100;
+    unsigned short int S = cnp % 100; // Salvam S
 
     // Caz particular: Sectorul 7 si 8 desfiintate in August 1979
     if ((JJ == 47 || JJ == 48) && LL >= 8 && AA >= 79) return 0;
 
-    if (S != 1 && S != 2 && S != 5 && S != 6) return 0;
+    if (S != 1 && S != 2 && S != 5 && S != 6) return 0; // Validam S
     if ((S == 5 || S == 6) && AA > 26) return 0; // Cineva nascut dupa 2000 nu poate avea ult. 2 cif. din an > 26
 
-    unsigned long long validC = 0;
+    unsigned long long validC = 0; // Validam C
     unsigned long long CONST = 279146358279ULL;
     while (copieCNP) {
             validC += (copieCNP % 10) * (CONST % 10);
@@ -76,14 +76,14 @@ bool validCNP(unsigned long long cnp) {
     if (validC < 10 && CifraControl != validC) return 0;
     if (validC == 10 && CifraControl != validC - 9) return 0;
 
-    return 1;
+    return 1; // Daca am ajuns aici, CNP-ul este VALID
 }
 
 public:
-    Angajat() : Nume(NULL), Prenume(NULL), NumarTelefon(NULL), Functie(NULL), CNP(0) {};
-    Angajat(const char *nume, const char *prenume, unsigned long long cnp, const char *numarTelefon, const char *functie) {
+    Angajat() : Nume(NULL), Prenume(NULL), NumarTelefon(NULL), Functie(NULL), CNP(0) {}; // Constructor fara Parametrii
+    Angajat(const char *nume, const char *prenume, unsigned long long cnp, const char *numarTelefon, const char *functie) { // Constructor cu Parametrii
         if (nume != NULL) {
-            Nume = new char[std::strlen(nume) + 1];
+            Nume = new char[std::strlen(nume) + 1]; // Alocare dinamica a memoriei
             std::strcpy(Nume, nume);
         }
         else {
@@ -114,9 +114,9 @@ public:
             Functie = NULL;
         }
 
-        CNP = (validCNP(cnp) ? cnp : 0);
+        CNP = (validCNP(cnp) ? cnp : 0); // Daca CNP-ul NU este Valid, i se va asigna valoarea 0
     }
-    Angajat(const Angajat &a) {
+    Angajat(const Angajat &a) { // Constructor de Copiere
         if (a.Nume != NULL) {
             Nume = new char[std::strlen(a.Nume) + 1];
             std::strcpy(Nume, a.Nume);
@@ -152,7 +152,7 @@ public:
         CNP = a.CNP;
     }
 
-    Angajat& operator=(const Angajat &a) {
+    Angajat& operator=(const Angajat &a) { // Operator Overloading pentru asignare (=)
         if (&a == this) {
             return *this;
         }
@@ -199,21 +199,23 @@ public:
         return *this;
     }
 
-    const char* getNume () const { return Nume; }
-    const char* getPrenume() const { return Prenume; }
-    const char* getNumarTelefon() const { return NumarTelefon; }
-    const char* getFunctie() const { return Functie; }
-    unsigned long long getCNP() const { return CNP; }
+    // GETTERI
+    const char* getNume () const { return Nume; }                // Getter pentru Nume
+    const char* getPrenume() const { return Prenume; }           // Getter pentru Prenume
+    const char* getNumarTelefon() const { return NumarTelefon; } // Getter pentru NumarTelefon
+    const char* getFunctie() const { return Functie; }           // Getter pentru Functie
+    unsigned long long getCNP() const { return CNP; }            // Getter pentru CNP
 
-    void setNume(const char *nume) {
-        delete [] Nume;
-        Nume = NULL;
+    // SETTERI
+    void setNume(const char *nume) { // Setter pentru Nume
+        delete [] Nume; // Dezalocarea memoriei alocate dinamic
+        Nume = NULL; // In cazul in care variabila data ca parametru (nume) are valori eronate, Nume = NULL
         if (nume != NULL) {
             Nume = new char[std::strlen(nume) + 1];
             std::strcpy(Nume, nume);
         }
     }
-    void setPrenume(const char *prenume) {
+    void setPrenume(const char *prenume) { // Setter pentru Prenume
         delete [] Prenume;
         Prenume = NULL;
         if (prenume != NULL) {
@@ -221,16 +223,16 @@ public:
             std::strcpy(Prenume, prenume);
         }
     }
-    void setNumarTelefon(const char *numarTelefon) {
+    void setNumarTelefon(const char *numarTelefon) { // Setter pentru NumarTelefon
         delete [] NumarTelefon;
         NumarTelefon = NULL;
 
-        if (validNrTel(numarTelefon)) {
+        if (validNrTel(numarTelefon)) { // Validam corectitudinea variabilei date ca parametru (numarTelefon)
             NumarTelefon = new char[std::strlen(numarTelefon) + 1];
             std::strcpy(NumarTelefon, numarTelefon);
         }
     }
-    void setFunctie(const char *functie) {
+    void setFunctie(const char *functie) { // Setter pentru Functie
         delete [] Functie;
         Functie = NULL;
 
@@ -239,13 +241,13 @@ public:
             std::strcpy(Functie, functie);
         }
     }
-    void setCNP(unsigned long long cnp) {
-        CNP = 0;
-        if (validCNP(cnp))
+    void setCNP(unsigned long long cnp) { // Setter pentru CNP
+        CNP = 0; 
+        if (validCNP(cnp)) // Validam corectitudinea variabilei data ca parametru (cnp). In cazul in care nu este Valida, CNP = 0
             CNP = cnp;
     }
 
-    friend std::ostream& operator<<(std::ostream &out, const Angajat &a) {
+    friend std::ostream& operator<<(std::ostream &out, const Angajat &a) { // Operator Overloading pentru afisare (<<)
         out << "Detalii angajat: \n";
         out << "Nume: " << (a.Nume == NULL ? "NULL" : a.Nume) << "\nPrenume: " << (a.Prenume == NULL ? "NULL" : a.Prenume) <<
                "\nFunctie: " << (a.Functie == NULL ? "NULL" : a.Functie) <<
@@ -253,7 +255,7 @@ public:
         return out;
     }
 
-    ~Angajat() {
+    ~Angajat() { // Destructor (dezalocam memoria alocata dinamic)
         delete[] Nume;
         delete[] Prenume;
         delete[] NumarTelefon;
