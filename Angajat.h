@@ -3,9 +3,10 @@
 #include <cstring>
 
 class Angajat { // Clasa Anagajat
-    char *Nume;             //  4 Date Membre
+    char *Nume;             //  6 Date Membre
     char *Prenume;
     unsigned long long CNP;
+    unsigned long long Salariu;
     char *NumarTelefon;
     char *Functie;
 
@@ -80,8 +81,8 @@ static bool validCNP(unsigned long long cnp) { // Metoda Privata
 }
 
 public:
-    Angajat() : Nume(NULL), Prenume(NULL), NumarTelefon(NULL), Functie(NULL), CNP(0) {}; // Constructor fara Parametrii
-    Angajat(const char *nume, const char *prenume, unsigned long long cnp, const char *numarTelefon, const char *functie) { // Constructor cu Parametrii
+    Angajat() : Nume(NULL), Prenume(NULL), NumarTelefon(NULL), Functie(NULL), CNP(0), Salariu(0) {}; // Constructor fara Parametrii
+    Angajat(const char *nume, const char *prenume, unsigned long long cnp, const char *numarTelefon, const char *functie, unsigned long long salariu) { // Constructor cu Parametrii
         if (nume != NULL) {
             Nume = new char[std::strlen(nume) + 1]; // Alocare dinamica a memoriei
             std::strcpy(Nume, nume);
@@ -115,6 +116,7 @@ public:
         }
 
         CNP = (validCNP(cnp) ? cnp : 0); // Daca CNP-ul NU este Valid, i se va asigna valoarea 0
+        Salariu = salariu;
     }
     Angajat(const Angajat &a) { // Constructor de Copiere
         if (a.Nume != NULL) {
@@ -150,6 +152,7 @@ public:
         }
 
         CNP = a.CNP;
+        Salariu = a.Salariu;
     }
 
     Angajat& operator=(const Angajat &a) { // Operator Overloading pentru asignare (=)
@@ -195,7 +198,8 @@ public:
         }
 
         CNP = a.CNP;
-
+        Salariu = a.Salariu;
+        
         return *this;
     }
 
@@ -205,6 +209,7 @@ public:
     const char* getNumarTelefon() const { return NumarTelefon; } // Getter pentru NumarTelefon
     const char* getFunctie() const { return Functie; }           // Getter pentru Functie
     unsigned long long getCNP() const { return CNP; }            // Getter pentru CNP
+    unsigned long long getSalariu() const { return Salariu; }    // Getter pentru Salariu
 
     // SETTERI
     void setNume(const char *nume) { // Setter pentru Nume
@@ -246,6 +251,7 @@ public:
         if (validCNP(cnp)) // Validam corectitudinea variabilei data ca parametru (cnp). In cazul in care nu este Valida, CNP = 0
             CNP = cnp;
     }
+    void setSalariu(unsigned long long salariu) { Salariu = salariu; } // Setter pentru Salariu
 
     friend std::ostream& operator<<(std::ostream &out, const Angajat &a) { // Operator Overloading pentru afisare (<<)
         out << "Detalii angajat: \n";
