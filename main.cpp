@@ -6,9 +6,9 @@
 #include "ReteaMagazine.h"
 
 int main() {
-	// Proiect POO 1
-	// Tema: Comert
-	
+    // Proiect POO 1
+    // Tema: Comert
+    
     // Teste de creare a obiectelor si apelarea metodelor claselor
 
     // Creare obiecte de baza (Produse si Angajati)
@@ -40,17 +40,17 @@ int main() {
     };
 
     // Angajati
-    Angajat sef1("Popescu", "Ion", 5050814401233, "0712345678", "Manager General");
+    Angajat sef1("Popescu", "Ion", 5050814401233, "0712345678", "Manager General", 8500); // Adaugat salariu
     Angajat echipa1[] = {
-        Angajat("Ionescu", "Maria", 2901225224566, "0722334455", "Casier"),
-        Angajat("Vasile", "Andrei", 5050814401233, "0799887766", "Lucrator Comercial")
+        Angajat("Ionescu", "Maria", 2901225224566, "0722334455", "Casier", 3500), // Adaugat salariu
+        Angajat("Vasile", "Andrei", 5050814401233, "0799887766", "Lucrator Comercial", 3200) // Adaugat salariu
     };
 
-    Angajat sef2("Marin", "George", 5050814401233, "0744556677", "Director Vanzari");
-    Angajat sef3("Dumitru", "Elena", 2901225224566, "0733112233", "Sef Magazin");
+    Angajat sef2("Marin", "George", 5050814401233, "0744556677", "Director Vanzari", 9000); // Adaugat salariu
+    Angajat sef3("Dumitru", "Elena", 2901225224566, "0733112233", "Sef Magazin", 6000); // Adaugat salariu
 
     Angajat echipa3[] = {
-        Angajat("Stan", "Mihai", 5050814401233, "0766112233", "Asistent Vanzari")
+        Angajat("Stan", "Mihai", 5050814401233, "0766112233", "Asistent Vanzari", 4000) // Adaugat salariu
     };
 
     // Initializare magazine (si crearea Retelei de Magazine)
@@ -104,8 +104,8 @@ int main() {
     std::cout << "Distanta intre " << m1.getNume() << loc1 << " si " << m3.getNume() << loc2
               << " este: " << loc1.distanta(loc2) << "\n";
 
-    Angajat sefNou("Mihailescu", "Gelu", 5050814401233, "0788998899", "Boss Suprem");
-    Angajat paznic("Tudor", "Cristi", 5050814401233, "0711112222", "Agent Securitate");
+    Angajat sefNou("Mihailescu", "Gelu", 5050814401233, "0788998899", "Boss Suprem", 15000); // Adaugat salariu
+    Angajat paznic("Tudor", "Cristi", 5050814401233, "0711112222", "Agent Securitate", 3000); // Adaugat salariu
 
     m1.setSef(sefNou); // Testam setSef
     m1.insereazaAngajat(m1.getNumarAngajati(), paznic); // Testam insereazaAngajat
@@ -120,7 +120,7 @@ int main() {
 
     // Manipulare Retea
     Produs patiserie[] = { Produs("Covrig", 2.0), Produs("Merdenea", 4.0) };
-    Angajat sefPatiserie("Zaharia", "Ioana", 2901225224566ULL, "0777888999", "Patiser Sef");
+    Angajat sefPatiserie("Zaharia", "Ioana", 2901225224566ULL, "0777888999", "Patiser Sef", 5500); // Adaugat salariu
 
     Magazin m6("Patiseria de vis", "Cald si bun", "SRL", 2, patiserie, Punct2D(50, 50), 0, sefPatiserie, NULL);
 
