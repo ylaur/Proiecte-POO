@@ -145,5 +145,108 @@ int main() {
     std::cout << "Clona (" << clonaBrico.getNume() << "): Primul produs este "
               << clonaBrico.getProdusX(0).getNume() << " - " << clonaBrico.getProdusX(0).getPret() << " RON\n";
 
+    std::cout << "\nMeniu: \n";
+
+    int alegere_meniu = -1;
+    while (alegere_meniu != 0) {
+        std::cout << "\n*****************************************\n";
+        std::cout << "                  MENIU                  \n";
+        std::cout << "*****************************************\n";
+        std::cout << "1. Afiseaza magazinele din retea\n";
+        std::cout << "2. Testeaza metoda 'distributie'\n";
+        std::cout << "0. Iesire\n";
+        std::cout << "-----------------------------------------\n";
+        std::cout << "Alege o optiune: ";
+
+        std::cin >> alegere_meniu;
+
+        switch (alegere_meniu) {
+            case 1: {
+                std::cout << "\n>>> AFISARE MAGAZINE <<<\n";
+                for (unsigned int i = 0; i < reteauaMea.getNumarMagazine(); ++i) {
+                     std::cout << reteauaMea.getMagazinX(i) << "\n";
+                }
+                break;
+            }
+            case 2: {
+                std::cout << "\n>>> METODA DISTRIBUTIE <<<\n";
+                unsigned int opt_distributie, sursa;
+
+                std::cout << "Optiuni distributie:\n";
+                std::cout << "  1 - Traseu complet catre destinatie\n";
+                std::cout << "  2 - Toate magazinele dintr-o raza maxima\n";
+                std::cout << "  3 - Cel mai indepartat magazin\n";
+                std::cout << "  4 - Cel mai apropiat magazin\n";
+                std::cout << "Alege optiunea (1-4): ";
+                std::cin >> opt_distributie;
+
+                if (opt_distributie >= 1 && opt_distributie <= 4) {
+                    std::cout << "\nMagazine disponibile:\n";
+                    for(unsigned int i = 0; i < reteauaMea.getNumarMagazine(); ++i) {
+                         std::cout << i << ". " << reteauaMea.getMagazine()[i].getNume() << "\n";
+                    }
+                    std::cout << "Introdu indexul magazinului sursa (0 - " << reteauaMea.getNumarMagazine() - 1 << "): ";
+                    std::cin >> sursa;
+
+                    unsigned int* rezultat = NULL;
+
+                    if (opt_distributie == 1) {
+                        long long destinatie;
+                        std::cout << "Introdu indexul magazinului destinatie: ";
+                        std::cin >> destinatie;
+                        rezultat = reteauaMea.distributie(sursa, opt_distributie, destinatie);
+
+                        if (rezultat != NULL) {
+                            unsigned int nr_magazine = rezultat[0];
+                            std::cout << "\nTraseu gasit (" << nr_magazine << " magazine implicate):\n";
+                            for (unsigned int i = 1; i <= nr_magazine; i++) {
+                                std::cout << reteauaMea.getMagazine()[rezultat[i]].getNume() << (i < nr_magazine ? " -> " : "");
+                            }
+                            std::cout << "\n";
+                        }
+                    }
+                    else if (opt_distributie == 2) {
+                        long long raza;
+                        std::cout << "Introdu raza maxima (distanta in care se cauta): ";
+                        std::cin >> raza;
+                        rezultat = reteauaMea.distributie(sursa, opt_distributie, raza);
+
+                        if (rezultat != NULL) {
+                            unsigned int nr_magazine = rezultat[0];
+                            std::cout << "\nS-au gasit " << nr_magazine << " magazine in raza specificata:\n";
+                            for (unsigned int i = 1; i <= nr_magazine; i++) {
+                                std::cout << "- " << reteauaMea.getMagazine()[rezultat[i]].getNume() << "\n";
+                            }
+                        }
+                    }
+                    else if (opt_distributie == 3 || opt_distributie == 4) {
+                        rezultat = reteauaMea.distributie(sursa, opt_distributie);
+
+                        if (rezultat != NULL) {
+                            std::cout << "\nMagazinul gasit este: " << reteauaMea.getMagazine()[*rezultat].getNume() << "\n";
+                        }
+                    }
+
+                    if (rezultat != NULL) {
+                        delete[] rezultat;
+                    } else {
+                        std::cout << "Eroare: Metoda a returnat NULL\n";
+                    }
+                } else {
+                    std::cout << "Optiune invalida pentru distributie\n";
+                }
+                break;
+            }
+            case 0: {
+                std::cout << "\nAi iesit din Meniu\n";
+                break;
+            }
+            default: {
+                std::cout << "\nOptiune invalida, mai incearca o data\n";
+                break;
+            }
+        }
+    }
+
     return 0;
 }
